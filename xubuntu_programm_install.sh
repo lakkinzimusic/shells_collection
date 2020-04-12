@@ -12,15 +12,15 @@ sudo apt-get update
 wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add -
 sudo add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
 sudo apt update
-sudo apt install code
+sudo apt-get install -y code
 
 
 #node
 cd ~
 curl -sL https://deb.nodesource.com/setup_13.x -o nodesource_setup.sh
 sudo bash nodesource_setup.sh
-sudo apt install nodejs
-sudo apt install build-essential
+sudo apt-get install -y  nodejs
+sudo apt-get install -y  build-essential
 sudo rm ~/nodesource_setup.sh
 
 #go
@@ -48,4 +48,4 @@ sudo dpkg -i mysql-apt-config_0.8.14-1_all.deb
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server
 sudo mysql -h127.0.0.1 -P3306 -uroot -e"UPDATE mysql.user SET password = PASSWORD('') WHERE user = 'root'"
 
-sudo apt install mysql-workbench
+sudo apt-get install -y mysql-workbench
