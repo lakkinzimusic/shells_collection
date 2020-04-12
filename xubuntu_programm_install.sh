@@ -21,21 +21,31 @@ curl -sL https://deb.nodesource.com/setup_13.x -o nodesource_setup.sh
 sudo bash nodesource_setup.sh
 sudo apt install nodejs
 sudo apt install build-essential
+sudo rm ~/nodesource_setup.sh
 
 #go
 cd ~
 curl -O https://dl.google.com/go/go1.14.2.linux-amd64.tar.gz
-tar xvf go1.10.3.linux-amd64.tar.gz
+tar xvf go1.14.2.linux-amd64.tar.gz
+sudo rm ~/go1.14.2.linux-amd64.tar.gz
 sudo chown -R root:root ./go
 sudo mv go /usr/local
 
-sudo sh -c "echo 'export GOPATH=$HOME/prog' >> ~/.profile"
-sudo sh -c "echo 'PATH=$PATH:$GOROOT/bin:$GOPATH/bin' >> ~/.profile"
-source ~/.profile
+sudo sh -c "echo 'export GOPATH=$HOME/prog' >> /etc/profile"
+sudo sh -c "echo 'export PATH=$PATH:$GOROOT/bin:$GOPATH/bin' >> /etc/profile"
+sudo sh -c "echo 'export PATH=$PATH:/usr/local/go/bin' >> /etc/profile"
+source /etc/profile
 
-echo "# shells_collection" >> README.md
-git init
-git add *
-git commit -m "first commit"
-git remote add origin https://github.com/lakkinzimusic/shells_collection.git
-git push -u origin master
+#git
+sudo apt install git
+git config --global user.name "lakkinzimusic"
+git config --global user.email "lakkinzimusic@gmail.com"
+
+#mysql
+wget -c https://dev.mysql.com/get/mysql-apt-config_0.8.14-1_all.deb
+sudo dpkg -i mysql-apt-config_0.8.14-1_all.deb
+
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server
+sudo mysql -h127.0.0.1 -P3306 -uroot -e"UPDATE mysql.user SET password = PASSWORD('') WHERE user = 'root'"
+
+sudo apt install mysql-workbench
