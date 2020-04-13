@@ -1,12 +1,19 @@
 #!/bin/bash
 
+
+#system
 sudo apt install software-properties-common apt-transport-https wget curl
+#keyboard and language
+setxkbmap -option grp:switch,grp:alt_shift_toggle us,ru
+
 
 
 #google-chrome
-wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
 sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+sudo apt-key add linux_signing_key.pub
 sudo apt-get update
+sudo apt install google-chrome-stable
 
 #code
 wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add -
@@ -46,6 +53,7 @@ wget -c https://dev.mysql.com/get/mysql-apt-config_0.8.14-1_all.deb
 sudo dpkg -i mysql-apt-config_0.8.14-1_all.deb
 
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server
-sudo mysql -h127.0.0.1 -P3306 -uroot -e"UPDATE mysql.user SET password = PASSWORD('') WHERE user = 'root'"
-
+sudo su
+mysql -e"ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '';"
+exit
 sudo apt-get install -y mysql-workbench
