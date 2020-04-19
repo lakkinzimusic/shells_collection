@@ -1,12 +1,27 @@
 #!/bin/bash
 
 
+#terminator
+sudo apt install terminator
+cp -r ./terminator /home/lakkinzimusic/.config/
+
+
+#appearence
+xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/workspace0/image-style -t int -s 0
+
+
+#shortcuts
+xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Primary><Alt>t" --create --type string --set "terminator"
+xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Super>q" --create --type string --set "terminator"
+xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Super>up" --create --type string --set "maximize_window_key"
+
+
 #system
 apt install -y software-properties-common apt-transport-https wget curl
 #keyboard and language
 setxkbmap -option grp:switch,grp:alt_shift_toggle us,ru
 
-
+sudo su
 
 #google-chrome
 sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
@@ -44,7 +59,7 @@ sh -c "echo 'export PATH=$PATH:/usr/local/go/bin' >> /etc/profile"
 source /etc/profile
 
 #git
-sudo apt install -y git
+apt install -y git
 git config --global user.name "lakkinzimusic"
 git config --global user.email "lakkinzimusic@gmail.com"
 
@@ -54,20 +69,5 @@ dpkg -i mysql-apt-config_0.8.14-1_all.deb
 
 DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server
 mysql -e"ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '';"
-exit
+
 apt-get install -y mysql-workbench
-
-
-#terminator
-apt install terminator
-cp -r ./terminator /home/lakkinzimusic/.config/
-
-
-#appearence
-xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/workspace0/image-style -t int -s 0
-
-
-#shortcuts
-xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Primary><Alt>t" --create --type string --set "terminator"
-xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Super>q" --create --type string --set "terminator"
-xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Super>up" --create --type string --set "maximize_window_key"
